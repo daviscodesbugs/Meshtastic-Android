@@ -169,11 +169,14 @@ class SettingsFragment : ScreenFragment("Settings"), Logging {
             }
 
         // init our region spinner
-        val spinner = binding.regionSpinner
-        val regionAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, regions)
-        regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = regionAdapter
+        ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item_region,
+            regions
+        ).apply {
+            setDropDownViewResource(R.layout.spinner_item_region)
+            binding.regionSpinner.adapter = this
+        }
 
         model.ourNodeInfo.asLiveData().observe(viewLifecycleOwner) { node ->
             binding.usernameEditText.setText(node?.user?.longName.orEmpty())
